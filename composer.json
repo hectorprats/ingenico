@@ -1,0 +1,21 @@
+{
+    "name": "bardela/ingenico",
+    "description": "Laravel 5 Wrapper for Ingenico Payments",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Billy Ardela",
+            "email": "billy.ardela@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "ingenico-epayments/connect-sdk-php": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bardela\\Ingenico\\": "src"
+        }
+    }
+}
