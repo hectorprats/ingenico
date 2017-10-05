@@ -6,7 +6,7 @@ return array(
     'api_key'                   => '',
     'secret_key'                => '',
     'end_point'                 => '',
-    'merchant'					=> '',
+    'merchant'                  => '',
     'return_url'                => '',
     'base_redirect_url'         => ''
 );
