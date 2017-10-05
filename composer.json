@@ -5,13 +5,13 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Billy Ardela",
+            "name": "Billy A.",
             "email": "billy.ardela@gmail.com"
         }
     ],
     "minimum-stability": "dev",
     "require": {
-        "ingenico-epayments/connect-sdk-php": "dev-master"
+        "ingenico-epayments/connect-sdk-php": "5.8.0"
     },
     "autoload": {
         "psr-4": {
