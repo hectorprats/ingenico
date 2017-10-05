@@ -14,11 +14,9 @@ class IngenicoServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
         $this->publishes([
             __DIR__.'/config/ingenico.php' => config_path('ingenico.php'),
         ]);
-        //$this->setupRoutes($this->app->router);
     }
 
     /**
