@@ -19,14 +19,6 @@ class IngenicoController extends Controller
 {
     protected $client;
 
-    public function __construct()
-    { 
-        //require $this->getPackagePath() . '/vendor/autoload.php';
-        //REMOVE WHEN package at packagist
-        //echo "base_path=".__DIR__ ."\n";
-        require base_path(). '/vendor/bardela/ingenico/vendor/autoload.php';
-    }
-
     /*
     * It tests the connection to Ingenido SDK with the config values from file
     * @return void
