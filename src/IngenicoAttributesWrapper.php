@@ -305,7 +305,7 @@ class IngenicoAttributesWrapper
     *   shippingAddress
     *   vatNumber
     *
-    * @return Order
+    * @return Customer
     */
     private function buildCustomer()
     {
@@ -548,6 +548,7 @@ class IngenicoAttributesWrapper
 
         return $order;
     }
+
     /**
     * Set Fraud. 
     *   More info at https://epayments.developer-ingenico.com/documentation/api/server/#schema_FraudFields
@@ -559,7 +560,7 @@ class IngenicoAttributesWrapper
         $fraud = new FraudFields();
             $fraud->addressesAreIdentical   = $this->addressesAreIdentical;
             $fraud->blackListData       = $this->blackListData;
-            //cardOwnweAddres
+            //cardOwnwerAddres
                 $cardOwnerAddress = new Address();
                     $cardOwnerAddress->additionalInfo   = $this->co_additionalInfo;
                     $cardOwnerAddress->city             = $this->co_city;
@@ -595,6 +596,11 @@ class IngenicoAttributesWrapper
         return $fraud;
     }
 
+    /**
+    * Set HostedCheckoutSpecificInput
+    *   More info at https://epayments.developer-ingenico.com/documentation/api/server/#schema_FraudFields
+    * @return void
+    */
     public function buildHostedCheckout()
     {
         $hostedCheckoutSpecificInput = new HostedCheckoutSpecificInput();
@@ -604,13 +610,19 @@ class IngenicoAttributesWrapper
         $hostedCheckoutSpecificInput->showResultPage = $this->showResultPage;
         $hostedCheckoutSpecificInput->tokens         = $this->tokens;
         $hostedCheckoutSpecificInput->variant   = $this->variant;
-        // Skip filters
-        
+
+        // filters
             $filter = new PaymentProductFiltersHostedCheckout();
                 $restrict = new PaymentProductFilter();
+                if (is_array($this->restrictToProducts))
                     $restrict->products = $this->restrictToProducts;
+                if (is_array($this->restrictToGroups))
+                    $restrict->groups = $this->restrictToGroups;
                 $exclude = new PaymentProductFilter();
+                if (is_array($this->excludeProducts))
                     $exclude->products  = $this->excludeProducts;
+                if (is_array($this->excludeGroups))
+                    $exclude->groups  = $this->excludeGroups;
             $filter->restrictTo = $restrict;
             $filter->exclude    = $exclude;
             $filter->tokensOnly = $this->tokensOnly;

@@ -12,7 +12,7 @@ use Ingenico\Connect\Sdk\Domain\Hostedcheckout\CreateHostedCheckoutRequest;
 use Ingenico\Connect\Sdk\Domain\Hostedcheckout\Definitions\PaymentProductFiltersHostedCheckout;
 use Ingenico\Connect\Sdk\Domain\Definitions\PaymentProductFilter;
 
-abstract class IngenicoRequest {
+class IngenicoRequest {
     protected $apiKey;
     protected $secret;
     protected $endPoint;
@@ -36,14 +36,16 @@ abstract class IngenicoRequest {
 
         //set the client which needs to set the connection first
         $communicatorConfiguration = new CommunicatorConfiguration($this->apiKey,$this->secret,$this->endPoint,'Ingenico');
-        $communicator = new Communicator(new DefaultConnection(),$communicatorConfiguration);
+        //$communicator = new Communicator(new DefaultConnection(),$communicatorConfiguration);
+        $communicatorCustom = new CustomCommunicator(new DefaultConnection(),$communicatorConfiguration);
 
-        $this->client = new Client($communicator);
+        //$this->client = new Client($communicator);
+        $this->client = new CustomClient($communicatorCustom);
     }
 
     /**
-     * @return Merchant
-     */
+    * @return Merchant
+    */
     public function getMerchant()
     {
         $client     = $this->client;
@@ -52,6 +54,9 @@ abstract class IngenicoRequest {
         return $merchant;
     }
 
+    /**
+    * @return Client
+    */
     public function getClient()
     {
         return $this->client;
@@ -82,8 +87,11 @@ abstract class IngenicoRequest {
     */
     public function testConnection()
     {
-        $merchant       = $this->client->merchant($this->merchant);
+        $classname = get_class($this->client);
+        $merchant       = $this->client->merchant($this->merchantId);
         $testconnection = $merchant->services()->testconnection();
         return $testconnection;
     }
+
+
 }

@@ -29,9 +29,10 @@ class IngenicoController extends Controller
         try {
             $testconnection = $ingenicoRequest->testConnection();
             echo "Connection to Ingenico SDK was successful.<br />";
-            var_dump($testconnection->result);
+            dd($testconnection);
         } catch (\Exception $e) {
             echo "Failed to connect to Ingenico SDK ".$e->getMessage()."<br />";
+            dd($e->getTrace());
         }
     }
 
@@ -122,15 +123,96 @@ class IngenicoController extends Controller
         $returnUrl  = 'http://api.sw.local/v1/ingenico/sample_return_url'; //replace for your own return url
         $example    = new IngenicoExample1($returnUrl);
         $result     = $example->run();
-        echo "The Checkout Hosted Request returned:<br />";
-        var_dump($result);
+        $response   = $result->getResponse();
+        $status     = $result->getStatus();
+        if ($status>=400)
+        {
+            $responseErrors = array();
+            foreach ($response->errors as $key => $error)
+            {
+                $responseErrors[$key]['category'] = $error->category;
+                $responseErrors[$key]['propertyName'] = $error->propertyName;
+                $responseErrors[$key]['message'] = $error->message;
+            }
+            $requestBody = $result->getRequestBody();
+            $responseErrors[]['requestBody'] = $requestBody;
+            return $this->formatResponse($responseErrors, $status);
+        }
+        $requestBody = $result->getRequestBody();
+        //else
+        
+        $baseRedirectUrl    = Config::get('ingenico.base_redirect_url');
+        $redirectUrl = $baseRedirectUrl . $response->partialRedirectUrl;
+
+        $responseSucceed[] = 'Sample 1: click on the following link to go to the payment gateway<br />';
+        $responseSucceed[] = '<a href="'.$redirectUrl.'">'.$redirectUrl.'</a>';
+        return $this->formatResponse($responseSucceed, 200);
+    }
+
+    public function example2Request()
+    {
+        $typeReponse = Input::get('type_response') ? Input::get('type_response') : 'json'; //json or html
+        $example2 = new IngenicoExample2();
+
+        $fields = $example2->getInputFields();
+        if ($typeReponse=="html")
+        {
+            return \View::make('bardela/ingenico::sampleform', array(
+                'url'       => '/v1/ingenico/example2response',
+                'fields'    => $fields
+            ));
+        }
+        else
+        {
+            return response()->json([
+                'msg'       =>  'success',
+                'url'       => '/v1/ingenico/example2response',
+                'fields'    =>  $fields
+                ], 200
+            );
+        }
+    }
+
+    public function example2Response()
+    {
+        $allInputs = \Input::all();
+        $notProperties = ['_token'=>''];
+        //remove notProperties elements from inputs
+        $inputs = array_diff_key($allInputs, $notProperties);
+
+        $returnUrl  = 'http://api.sw.local/v1/ingenico/sample_return_url';
+        $example2   = new IngenicoExample2($returnUrl);
+        $result     = $example2->run($inputs);
+        $response   = $result->getResponse();
+        
+        //echo "The Checkout Hosted Request returned:<br />";
+        //var_dump($response);
 
         $baseRedirectUrl    = Config::get('ingenico.base_redirect_url');
 
-        $redirectUrl = $baseRedirectUrl . $result->partialRedirectUrl;
+        $redirectUrl = $baseRedirectUrl . $response->partialRedirectUrl;
         echo "Sample 1: click on the following link to go to the payment gateway<br />";
         echo '<a href="'.$redirectUrl.'">'.$redirectUrl.'</a>';
         return;
     }
 
+    public function formatResponse($arrayResponse, $status)
+    {
+
+        $typeReponse = Input::get('type_response') ? Input::get('type_response') : 'json'; //json or html
+        if ($typeReponse=="html")
+        {
+            $res    = var_dump($arrayResponse);
+            return response($res, $status);
+        }
+        else
+        {
+            $msg = $status==200 ? 'success' : 'error';
+            return response()->json([
+                'msg'       =>  $msg,
+                'result'    =>  $arrayResponse
+                ], $status
+            );
+        }
+    }
 }
