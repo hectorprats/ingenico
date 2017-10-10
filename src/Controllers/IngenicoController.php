@@ -25,9 +25,8 @@ class IngenicoController extends Controller
     */
     public function testConnection()
     {
-        $ingenicoRequest = new IngenicoRequest();
         try {
-            $testconnection = $ingenicoRequest->testConnection();
+            $testconnection = \Ingenico::testConnection();
             echo "Connection to Ingenico SDK was successful.<br />";
             dd($testconnection);
         } catch (\Exception $e) {
@@ -39,7 +38,7 @@ class IngenicoController extends Controller
     /*
     * This is the return from de redirect payment, process the result and make a new request
     * to know transaction status and indicates whether it was successful or not
-    *
+    * 
     * It expects to have the following input structure coming from the redirect
     *    HTTP Response 201
     *    -RETURNMAC: String(50) When the consumer is returned to your site we will append this field and value to the query-string. You should store this data, so you can identify the returning consumer.
@@ -60,10 +59,8 @@ class IngenicoController extends Controller
 
         $merchantId = Config::get('ingenico.merchant');
 
-        $ingenicoRequest    = new IngenicoHostedCheckoutRequest();
-
         try {
-            $response = $ingenicoRequest->getStatus($checkoutId);
+            $response = \Ingenico::getPaymentStatus($checkoutId);
         } catch(\Exception $e) {
             //the checkout most likely doesn't exist
             $msg        = $e->getTrace()[0]['args'][1]->errors[0]->message;
@@ -120,11 +117,15 @@ class IngenicoController extends Controller
     */
     public function example1()
     {
-        $returnUrl  = 'http://api.sw.local/v1/ingenico/sample_return_url'; //replace for your own return url
-        $example    = new IngenicoExample1($returnUrl);
-        $result     = $example->run();
+        $returnUrl          = 'http://api.sw.local/v1/ingenico/sample_return_url'; //replace for your own return url
+        $example            = new IngenicoExample1();
+        $attributesWrapper  = $example->mappedAttributes(); //instead of setData
+
+        $result     = \Ingenico::payment($attributesWrapper, $returnUrl);
+
         $response   = $result->getResponse();
         $status     = $result->getStatus();
+
         if ($status>=400)
         {
             $responseErrors = array();
@@ -158,7 +159,7 @@ class IngenicoController extends Controller
         if ($typeReponse=="html")
         {
             return \View::make('bardela/ingenico::sampleform', array(
-                'url'       => '/v1/ingenico/example2response',
+                'url'       => '/v1/ingenico/exampleformresponse',
                 'fields'    => $fields
             ));
         }
@@ -166,23 +167,26 @@ class IngenicoController extends Controller
         {
             return response()->json([
                 'msg'       =>  'success',
-                'url'       => '/v1/ingenico/example2response',
+                'url'       => '/v1/ingenico/exampleformresponse',
                 'fields'    =>  $fields
                 ], 200
             );
         }
     }
 
-    public function example2Response()
+    public function exampleFormResponse()
     {
-        $allInputs = \Input::all();
+        //remove notProperties elements from inputs array
         $notProperties = ['_token'=>''];
-        //remove notProperties elements from inputs
-        $inputs = array_diff_key($allInputs, $notProperties);
+        $inputs = array_diff_key(\Input::all(), $notProperties);
+        
+        $example            = new IngenicoExample2(); //It could be Example3, it does the same
+        $attributesWrapper  = $example->mappedAttributes($inputs);
 
         $returnUrl  = 'http://api.sw.local/v1/ingenico/sample_return_url';
-        $example2   = new IngenicoExample2($returnUrl);
-        $result     = $example2->run($inputs);
+
+        $result   = \Ingenico::payment($attributesWrapper, $returnUrl);
+
         $response   = $result->getResponse();
         
         //echo "The Checkout Hosted Request returned:<br />";
@@ -191,7 +195,7 @@ class IngenicoController extends Controller
         $baseRedirectUrl    = Config::get('ingenico.base_redirect_url');
 
         $redirectUrl = $baseRedirectUrl . $response->partialRedirectUrl;
-        echo "Sample 2: click on the following link to go to the payment gateway<br />";
+        echo "Sample: click on the following link to go to the payment gateway<br />";
         echo '<a href="'.$redirectUrl.'">'.$redirectUrl.'</a>';
         return;
     }
@@ -205,7 +209,7 @@ class IngenicoController extends Controller
         if ($typeReponse=="html")
         {
             return \View::make('bardela/ingenico::sampleform', array(
-                'url'       => '/v1/ingenico/example3response',
+                'url'       => '/v1/ingenico/exampleformresponse',
                 'fields'    => $fields
             ));
         }
@@ -213,34 +217,11 @@ class IngenicoController extends Controller
         {
             return response()->json([
                 'msg'       =>  'success',
-                'url'       => '/v1/ingenico/example3response',
+                'url'       => '/v1/ingenico/exampleformresponse',
                 'fields'    =>  $fields
                 ], 200
             );
         }
-    }
-
-    public function example3Response()
-    {
-        $allInputs = \Input::all();
-        $notProperties = ['_token'=>''];
-        //remove notProperties elements from inputs
-        $inputs = array_diff_key($allInputs, $notProperties);
-
-        $returnUrl  = 'http://api.sw.local/v1/ingenico/sample_return_url';
-        $example3   = new IngenicoExample3($returnUrl);
-        $result     = $example3->run($inputs);
-        $response   = $result->getResponse();
-        
-        //echo "The Checkout Hosted Request returned:<br />";
-        //var_dump($response);
-
-        $baseRedirectUrl    = Config::get('ingenico.base_redirect_url');
-
-        $redirectUrl = $baseRedirectUrl . $response->partialRedirectUrl;
-        echo "Sample 3: click on the following link to go to the payment gateway<br />";
-        echo '<a href="'.$redirectUrl.'">'.$redirectUrl.'</a>';
-        return;
     }
 
     public function formatResponse($arrayResponse, $status)

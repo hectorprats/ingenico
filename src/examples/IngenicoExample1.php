@@ -3,19 +3,20 @@ namespace Bardela\Ingenico;
 
 use Config;
 use Bardela\Ingenico\IngenicoAttributtesWrapper;
-class IngenicoExample1 extends IngenicoExampleGeneric
-{
-    // inherit:
-    //public $returnUrl;
 
+/**
+* Sample data 1 for test:
+* How to test this sample
+* 
+*        $example            = new IngenicoExample1();
+*        $attributesWrapper  = $example->mappedAttributes(); //instead of setData
+*        $result     = \Ingenico::payment($attributesWrapper, 'http://returnurl...');
+*
+*/
+class IngenicoExample1 extends IngenicoExampleGeneric
+{   
     // inherit:
-    //public function __construct($returnUrl=null)
-    
-    // inherit:
-    //public function setData($inputFields=null)
-    
-    // inherit:
-    //public function run($inputFields=null)
+    //public function mappedAttributes($inputFields=null)
 
     /**
     * {@inheritDoc}

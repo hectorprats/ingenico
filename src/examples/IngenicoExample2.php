@@ -3,19 +3,23 @@ namespace Bardela\Ingenico;
 
 use Config;
 use Bardela\Ingenico\IngenicoAttributtesWrapper;
+
+/**
+* This example can be executed in 2 steps
+* First: get the all inputs and render in html form (we can modify the field values we want)
+* 
+*       $example            = new IngenicoExample2();
+*       $inputs2Render      = $example2->getInputFields();
+*
+* After the sending the form, catch the form values
+*
+*       $attributesWrapper  = $example->mappedAttributes($inputs);
+*       $result     = \Ingenico::payment($attributesWrapper, 'http://returnurl...');
+*/
 class IngenicoExample2 extends IngenicoExampleGeneric
 {
     // inherit:
-    //public $returnUrl;
-
-    // inherit:
-    //public function __construct($returnUrl=null)
-
-    // inherit:
-    //public function setData($inputFields=null)
-    
-    // inherit:
-    //public function run($inputFields=null)
+    //public function mappedAttributes($inputFields=null)
 
     /**
     * {@inheritDoc}

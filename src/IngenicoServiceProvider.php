@@ -15,7 +15,7 @@ class IngenicoServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/config/ingenico.php' => config_path('ingenico.php'),
+            __DIR__.'/../config/ingenico.php' => config_path('ingenico.php'),
         ]);
         $this->loadViewsFrom(__DIR__. '/views/', 'bardela/ingenico');
     }
@@ -27,6 +27,7 @@ class IngenicoServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->registerIngenico();
         //register out controller
         $this->app->make('Bardela\Ingenico\IngenicoController');
         config([
@@ -35,4 +36,10 @@ class IngenicoServiceProvider extends ServiceProvider
 
     }
 
+    private function registerIngenico()
+    {
+        $this->app->bind('ingenico',function($app){
+            return new Ingenico($app);
+        });
+    }
 }

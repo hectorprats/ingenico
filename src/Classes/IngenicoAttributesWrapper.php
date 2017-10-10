@@ -601,11 +601,11 @@ class IngenicoAttributesWrapper
     *   More info at https://epayments.developer-ingenico.com/documentation/api/server/#schema_FraudFields
     * @return void
     */
-    public function buildHostedCheckout()
+    public function buildHostedCheckout($url=null)
     {
         $hostedCheckoutSpecificInput = new HostedCheckoutSpecificInput();
         $hostedCheckoutSpecificInput->locale    = $this->locale;
-        $hostedCheckoutSpecificInput->returnUrl = $this->returnUrl;
+        $hostedCheckoutSpecificInput->returnUrl = $url==null || $url==''? $this->returnUrl : $url;
         
         $hostedCheckoutSpecificInput->showResultPage = $this->showResultPage;
         $hostedCheckoutSpecificInput->tokens         = $this->tokens;

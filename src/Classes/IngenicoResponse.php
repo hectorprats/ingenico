@@ -5,9 +5,20 @@ use Ingenico\Connect\Sdk\Domain\Errors\ErrorResponse;
 use Ingenico\Connect\Sdk\Domain\Hostedcheckout\CreateHostedCheckoutResponse;
 
 class IngenicoResponse {
+    /*
+    * CreateHostedCheckoutResponse {
+    *   +RETURNMAC: "6d4..."
+    *   +hostedCheckoutId: "ee5..."
+    *   +invalidTokens: null
+    *   +partialRedirectUrl: "pay1.preprod.secured-by-ingenico.com:443/checkout/...?requestToken=c.."
+    * }
+    */
     protected $response;
+
     protected $status;
+    
     protected $requestBody;
+
     /**
     * It sets up response and its status
     * @param ErrorResponse|CreateHostedCheckoutResponse Response
@@ -27,7 +38,6 @@ class IngenicoResponse {
     {
         return $this->status;
     }
-
     public function getResponse()
     {
         return $this->response;

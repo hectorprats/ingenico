@@ -1,25 +1,15 @@
 <?php
 namespace Bardela\Ingenico;
 
-use Config;
 use Bardela\Ingenico\IngenicoAttributtesWrapper;
+
+/**
+* The main goal of this class is show and manipulate the collections of IngenicoAttributtesWrapper properties
+* It's a generic/abstact class, so we can extend it to create a custom set of data for each test
+*
+*/
 abstract class IngenicoExampleGeneric
 {
-    /** 
-    * Url that we want to be loaded after finishing the Hosted checkout payment redirect
-    * @var string 
-    */
-    protected $returnUrl;
-
-    /**
-    * Initialize Example. Use the return url defined in the config file or the one passed by parameter
-    *
-    * @param String $returnUrl 
-    */ 
-    public function __construct($returnUrl=null)
-    {
-        $this->returnUrl = isset($returnUrl) ? $returnUrl :  Config::get('ingenico.return_url');
-    }
 
     /**
     * It returns an associative array of inputs form fields that match the IngenicoAttributesWrapper properties
@@ -70,7 +60,7 @@ abstract class IngenicoExampleGeneric
     *
     * @return IngenicoAttributesWrapper
     */
-    public function setData($inputFields=null)
+    public function mappedAttributes($inputFields=null)
     {
         $ingenicoAttributesWrapper = new IngenicoAttributesWrapper();
 
@@ -92,49 +82,6 @@ abstract class IngenicoExampleGeneric
                 //else
                 $ingenicoAttributesWrapper->{$key} = $value;
         }
-        $ingenicoAttributesWrapper->returnUrl = $this->returnUrl;
         return $ingenicoAttributesWrapper;
     }
-
-    /**
-    * It builds a Checkout Hosted Request using the IngenicoAttributesWrapper and send the request
-    * The response Object must be something like this:
-    * CreateHostedCheckoutResponse {
-    *   +RETURNMAC: "6d4..."
-    *   +hostedCheckoutId: "ee5..."
-    *   +invalidTokens: null
-    *   +partialRedirectUrl: "pay1.preprod.secured-by-ingenico.com:443/checkout/...?requestToken=c.."
-    * }
-    * 
-    * @param string[string] Array of input name-value's pairs that match with IngenicoAttributesWrapper properties
-    *
-    * @return CreateHostedCheckoutResponse that can be printed
-    */
-    public function run($inputFields=null)
-    {
-
-        /* ---------------------------------------------
-        * Set all the data to do the request
-        * -------------------------------------------- */        
-        $requestAttributes = $this->setData($inputFields);
-        $order          = $requestAttributes->buildOrder();
-        $fraud          = $requestAttributes->buildFraud();
-        $hostedCheckout = $requestAttributes->buildHostedCheckout();
-
-        /* ---------------------------------------------
-        * Prepare the Request
-        * -------------------------------------------- */
-        $request = new IngenicoHostedCheckoutRequest();
-        $request->setOrder($order);
-        $request->setFraudFields($fraud);
-        $request->setHostedCheckoutSpecificInput($hostedCheckout);
-        
-        /* ---------------------------------------------
-        * Send the request
-        * -------------------------------------------- */
-        $response   = $request->send();
-
-        return $response;
-    }
-
 }
