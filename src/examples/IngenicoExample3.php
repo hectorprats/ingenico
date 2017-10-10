@@ -3,7 +3,7 @@ namespace Bardela\Ingenico;
 
 use Config;
 use Bardela\Ingenico\IngenicoAttributtesWrapper;
-class IngenicoExample2 extends IngenicoExampleGeneric
+class IngenicoExample3 extends IngenicoExampleGeneric
 {
     // inherit:
     //public $returnUrl;
@@ -47,7 +47,7 @@ class IngenicoExample2 extends IngenicoExampleGeneric
         */
         $inputs = array();
 
-        $inputs['hostedCheckoutSpecificInput'][] = ['type' => 'text', 'name' => 'locale', 'value' => 'en_GB']; //ISO 2
+        $inputs['hostedCheckoutSpecificInput'][] = ['type' => 'text', 'name' => 'locale', 'value' => 'es_ES']; //ISO 2
         //too many fields for airlineData
         //$inputs['order-AdditionalOrderInput-airlineData'] = ['type' => 'text', 'name' => '', 'value' => ''];
         //deprecated
@@ -58,15 +58,15 @@ class IngenicoExample2 extends IngenicoExampleGeneric
         $inputs['order-additionalOrderInput-typeInformation'][] = ['type' => 'select', 'name' => 'purchaseType', 'options' => ['good','service']];
         $inputs['order-additionalOrderInput-typeInformation'][] = ['type' => 'select', 'name' => 'usageType', 'options' => ['private','commercial']];
 
-        $inputs['order-amountOfMoney'][] = ['type' => 'text', 'name' => 'amount', 'value' => '10100']; //101€
+        $inputs['order-amountOfMoney'][] = ['type' => 'text', 'name' => 'amount', 'value' => '20300']; //101€
         $inputs['order-amountOfMoney'][] = ['type' => 'text', 'name' => 'currency', 'value' => 'USD'];
 
-        $inputs['customer-billingAddress'][] = ['type' => 'text', 'name' => 'bi_countryCode', 'value' => 'US']; //ISO 2
+        $inputs['customer-billingAddress'][] = ['type' => 'text', 'name' => 'bi_countryCode', 'value' => 'ES']; //ISO 2
         
-        $inputs['customer-billingAddress'][] = ['type' => 'text', 'name' => 'bi_state',   'value' => 'California'];
-        $inputs['customer-billingAddress'][] = ['type' => 'text', 'name' => 'bi_city',    'value' => 'Oakland'];
-        $inputs['customer-billingAddress'][] = ['type' => 'text', 'name' => 'bi_zip',     'value' => '0001'];
-        $inputs['customer-billingAddress'][] = ['type' => 'text', 'name' => 'bi_street',  'value' => 'Main Square'];
+        $inputs['customer-billingAddress'][] = ['type' => 'text', 'name' => 'bi_state',   'value' => ''];
+        $inputs['customer-billingAddress'][] = ['type' => 'text', 'name' => 'bi_city',    'value' => 'Madrid'];
+        $inputs['customer-billingAddress'][] = ['type' => 'text', 'name' => 'bi_zip',     'value' => '28000'];
+        $inputs['customer-billingAddress'][] = ['type' => 'text', 'name' => 'bi_street',  'value' => 'Calle Mayor'];
         $inputs['customer-billingAddress'][] = ['type' => 'text', 'name' => 'bi_houseNumber', 'value' => '1'];
         $inputs['customer-billingAddress'][] = ['type' => 'text', 'name' => 'bi_additionalInfo', 'value' => 'b'];
         //Company Information
@@ -74,11 +74,11 @@ class IngenicoExample2 extends IngenicoExampleGeneric
         //Contact Details
         $inputs['customer-contactDetails'][] = ['type' => 'text', 'name' => 'cd_emailAddress', 'value' => 'test@testemail.com'];
         $inputs['customer-contactDetails'][] = ['type' => 'text', 'name' => 'cd_emailMessageType', 'value' => 'plain-text'];
-        $inputs['customer-contactDetails'][] = ['type' => 'text', 'name' => 'cd_faxNumber',   'value' => '0199999998'];
-        $inputs['customer-contactDetails'][] = ['type' => 'text', 'name' => 'cd_phoneNumber', 'value' => '0199999999'];
-        $inputs['customer'][] = ['type' => 'text', 'name' => 'fiscalNumber', 'value' => 'Oakland'];
+        $inputs['customer-contactDetails'][] = ['type' => 'text', 'name' => 'cd_faxNumber',   'value' => ''];
+        $inputs['customer-contactDetails'][] = ['type' => 'text', 'name' => 'cd_phoneNumber', 'value' => ''];
+        $inputs['customer'][] = ['type' => 'text', 'name' => 'fiscalNumber', 'value' => ''];
         $inputs['customer'][] = ['type' => 'text', 'name' => 'c_locale', 'value' => ''];
-        $inputs['customer'][] = ['type' => 'text', 'name' => 'merchantCustomerId', 'value' => '987654'];
+        $inputs['customer'][] = ['type' => 'text', 'name' => 'merchantCustomerId', 'value' => ''];
 
         //Personal Information
         $inputs['customer-personalInformation'][] = ['type' => 'text', 'name' => 'dateOfBirth', 'value' => '19800116'];
@@ -101,7 +101,7 @@ class IngenicoExample2 extends IngenicoExampleGeneric
         $inputs['customer-shippingAddress'][] = ['type' => 'text', 'name' => 'sa_street', 'value' => ''];
         $inputs['customer-shippingAddress'][] = ['type' => 'text', 'name' => 'sa_zip', 'value' => ''];
 
-        $inputs['customer'][] = ['type' => 'text', 'name' => 'vatNumber', 'value' => '0006677'];
+        $inputs['customer'][] = ['type' => 'text', 'name' => 'vatNumber', 'value' => ''];
         
         //items is array. we do not set arrays
         //$inputs['order-items'][] = ['type' => 'text', 'name' => '', 'value' => ''];
@@ -135,7 +135,7 @@ class IngenicoExample2 extends IngenicoExampleGeneric
         //$cardOwnerAddress; It doesn't have sense as the it's redirect payment method
         //$inputs['fraud'][] = ['type' => 'text', 'name' => 'cardOwnerAddress', 'value' => ''];
         $inputs['fraud'][] = ['type' => 'text', 'name' => 'customerIpAddress', 'value' => '192.168.1.1'];
-        $inputs['fraud'][] = ['type' => 'select', 'name' => 'defaultFormFill', 'options' => ['automatically','automatically-but-modified','manually ']];
+        $inputs['fraud'][] = ['type' => 'select', 'name' => 'defaultFormFill', 'options' => ['automatically','automatically-but-modified','manually']];
         $inputs['fraud'][] = ['type' => 'select', 'name' => 'fingerPrintActivated', 'options' => ['false','true']];
         //$giftCardType           = "birthday";
         //$giftMessage            = "";

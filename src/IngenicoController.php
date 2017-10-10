@@ -191,7 +191,54 @@ class IngenicoController extends Controller
         $baseRedirectUrl    = Config::get('ingenico.base_redirect_url');
 
         $redirectUrl = $baseRedirectUrl . $response->partialRedirectUrl;
-        echo "Sample 1: click on the following link to go to the payment gateway<br />";
+        echo "Sample 2: click on the following link to go to the payment gateway<br />";
+        echo '<a href="'.$redirectUrl.'">'.$redirectUrl.'</a>';
+        return;
+    }
+
+    public function example3Request()
+    {
+        $typeReponse = Input::get('type_response') ? Input::get('type_response') : 'json'; //json or html
+        $example3 = new IngenicoExample3();
+
+        $fields = $example3->getInputFields();
+        if ($typeReponse=="html")
+        {
+            return \View::make('bardela/ingenico::sampleform', array(
+                'url'       => '/v1/ingenico/example3response',
+                'fields'    => $fields
+            ));
+        }
+        else
+        {
+            return response()->json([
+                'msg'       =>  'success',
+                'url'       => '/v1/ingenico/example3response',
+                'fields'    =>  $fields
+                ], 200
+            );
+        }
+    }
+
+    public function example3Response()
+    {
+        $allInputs = \Input::all();
+        $notProperties = ['_token'=>''];
+        //remove notProperties elements from inputs
+        $inputs = array_diff_key($allInputs, $notProperties);
+
+        $returnUrl  = 'http://api.sw.local/v1/ingenico/sample_return_url';
+        $example3   = new IngenicoExample3($returnUrl);
+        $result     = $example3->run($inputs);
+        $response   = $result->getResponse();
+        
+        //echo "The Checkout Hosted Request returned:<br />";
+        //var_dump($response);
+
+        $baseRedirectUrl    = Config::get('ingenico.base_redirect_url');
+
+        $redirectUrl = $baseRedirectUrl . $response->partialRedirectUrl;
+        echo "Sample 3: click on the following link to go to the payment gateway<br />";
         echo '<a href="'.$redirectUrl.'">'.$redirectUrl.'</a>';
         return;
     }

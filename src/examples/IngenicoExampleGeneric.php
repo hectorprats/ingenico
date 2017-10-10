@@ -19,7 +19,6 @@ abstract class IngenicoExampleGeneric
     public function __construct($returnUrl=null)
     {
         $this->returnUrl = isset($returnUrl) ? $returnUrl :  Config::get('ingenico.return_url');
-        echo "url=$returnUrl<br />";
     }
 
     /**

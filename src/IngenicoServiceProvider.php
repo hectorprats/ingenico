@@ -17,6 +17,7 @@ class IngenicoServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/config/ingenico.php' => config_path('ingenico.php'),
         ]);
+        $this->loadViewsFrom(__DIR__. '/views/', 'bardela/ingenico');
     }
 
     /**
