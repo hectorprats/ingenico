@@ -1,6 +1,6 @@
 <?php 
 //namespace ApiSW\Http\Controllers;
-namespace Bardela\Ingenico\Controllers;
+namespace Bardela\Ingenico\Http\Controllers;
  
 use ApiSW\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -20,7 +20,15 @@ use \Bardela\Ingenico\IngenicoExample3;
 class IngenicoController extends Controller
 {
     protected $client;
+    protected $basePath = '/ingenico';
+    protected $returnUrlPath = '/ingenico/sample_return_url'; //the one that is defined in routes.php
 
+    public function url($path=null)
+    {
+        $newUrl = url('/');
+        $newUrl .= $path==null ? $this->returnUrlPath : $this->basePath . $path;
+        return $newUrl;
+    }
     /*
     * It tests the connection to Ingenido SDK with the config values from file
     * @return void
@@ -119,7 +127,7 @@ class IngenicoController extends Controller
     */
     public function example1()
     {
-        $returnUrl          = 'http://api.sw.local/v1/ingenico/sample_return_url'; //replace for your own return url
+        $returnUrl          = $this->url(); //replace for your own return url
         $example            = new IngenicoExample1();
         $attributesWrapper  = $example->mappedAttributes(); //instead of setData
 
@@ -147,32 +155,32 @@ class IngenicoController extends Controller
         $baseRedirectUrl    = Config::get('ingenico.base_redirect_url');
         $redirectUrl = $baseRedirectUrl . $response->partialRedirectUrl;
 
-        $responseSucceed[] = 'Sample 1: click on the following link to go to the payment gateway<br />';
-        $responseSucceed[] = '<a href="'.$redirectUrl.'">'.$redirectUrl.'</a>';
+        $responseSucceed = 'Sample 1: click on the following link to go to the payment gateway<br />';
+        $responseSucceed .= '<a href="'.$redirectUrl.'">'.$redirectUrl.'</a>';
         return $this->formatResponse($responseSucceed, 200);
     }
 
     public function example2Request()
     {
-        $typeReponse = Input::get('type_response') ? Input::get('type_response') : 'json'; //json or html
+        $typeReponse = Input::get('type_response') ? Input::get('type_response') : 'html'; //json or html
         $example2 = new IngenicoExample2();
 
         $fields = $example2->getInputFields();
-        if ($typeReponse=="html")
-        {
-            return \View::make('bardela/ingenico::sampleform', array(
-                'url'       => '/v1/ingenico/exampleformresponse',
-                'fields'    => $fields
-            ));
-        }
-        else
+        if ($typeReponse=="json")
         {
             return response()->json([
                 'msg'       =>  'success',
-                'url'       => '/v1/ingenico/exampleformresponse',
+                'url'       =>  $this->url('/exampleformresponse'),
                 'fields'    =>  $fields
                 ], 200
             );
+        }
+        else
+        {
+            return \View::make('bardela/ingenico::sampleform', array(
+                'url'       => $this->url('/exampleformresponse'),
+                'fields'    => $fields
+            ));
         }
     }
 
@@ -185,7 +193,7 @@ class IngenicoController extends Controller
         $example            = new IngenicoExample2(); //It could be Example3, it does the same
         $attributesWrapper  = $example->mappedAttributes($inputs);
 
-        $returnUrl  = 'http://api.sw.local/v1/ingenico/sample_return_url';
+        $returnUrl  = $this->url();
 
         $result   = \Ingenico::payment($attributesWrapper, $returnUrl);
 
@@ -204,45 +212,44 @@ class IngenicoController extends Controller
 
     public function example3Request()
     {
-        $typeReponse = Input::get('type_response') ? Input::get('type_response') : 'json'; //json or html
+        $typeReponse = Input::get('type_response') ? Input::get('type_response') : 'html'; //json or html
         $example3 = new IngenicoExample3();
 
         $fields = $example3->getInputFields();
-        if ($typeReponse=="html")
-        {
-            return \View::make('bardela/ingenico::sampleform', array(
-                'url'       => '/v1/ingenico/exampleformresponse',
-                'fields'    => $fields
-            ));
-        }
-        else
+        if ($typeReponse=="json")
         {
             return response()->json([
                 'msg'       =>  'success',
-                'url'       => '/v1/ingenico/exampleformresponse',
+                'url'       =>  $this->url('/exampleformresponse'),
                 'fields'    =>  $fields
                 ], 200
             );
         }
+        else
+        {
+            return \View::make('bardela/ingenico::sampleform', array(
+                'url'       => $this->url('/exampleformresponse'),
+                'fields'    => $fields
+            ));
+        }
     }
 
-    public function formatResponse($arrayResponse, $status)
+    public function formatResponse($response, $status)
     {
 
-        $typeReponse = Input::get('type_response') ? Input::get('type_response') : 'json'; //json or html
-        if ($typeReponse=="html")
-        {
-            $res    = var_dump($arrayResponse);
-            return response($res, $status);
-        }
-        else
+        $typeReponse = Input::get('type_response') ? Input::get('type_response') : 'html'; //json or html
+        if ($typeReponse=="json")
         {
             $msg = $status==200 ? 'success' : 'error';
             return response()->json([
                 'msg'       =>  $msg,
-                'result'    =>  $arrayResponse
+                'result'    =>  $response
                 ], $status
             );
+        }
+        else
+        {
+            return response($response, $status);
         }
     }
 }
