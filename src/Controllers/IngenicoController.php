@@ -1,6 +1,6 @@
 <?php 
 //namespace ApiSW\Http\Controllers;
-namespace Bardela\Ingenico;
+namespace Bardela\Ingenico\Controllers;
  
 use ApiSW\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -13,6 +13,8 @@ use Ingenico\Connect\Sdk\Communicator;
 use Ingenico\Connect\Sdk\DefaultConnection;
 use Ingenico\Connect\Sdk\Client;
 use \Bardela\Ingenico\IngenicoExample1;
+use \Bardela\Ingenico\IngenicoExample2;
+use \Bardela\Ingenico\IngenicoExample3;
 
 
 class IngenicoController extends Controller

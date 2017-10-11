@@ -29,7 +29,7 @@ class IngenicoServiceProvider extends ServiceProvider
     {
         $this->registerIngenico();
         //register out controller
-        $this->app->make('Bardela\Ingenico\IngenicoController');
+        $this->app->make('Bardela\Ingenico\Controllers\IngenicoController');
         config([
             'config/ingenico.php', // add your new config file here!
         ]);
