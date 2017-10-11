@@ -47,10 +47,10 @@ Edit this new file and set up the values with your Ingenico access data mostly. 
 You can find the examples IngenicoController.php and routes.php
 Copy the lines you want from this package routes.php to your main routes.php in order to try some payment examples.
 Then, visit these new urls in your browser.
-http://YOURDOMAIN/ingenico/testconnection
-http://YOURDOMAIN/ingenico/example1
-http://YOURDOMAIN/ingenico/example2request
-http://YOURDOMAIN/ingenico/example3request
+- http://YOURDOMAIN/ingenico/testconnection
+- http://YOURDOMAIN/ingenico/example1
+- http://YOURDOMAIN/ingenico/example2request
+- http://YOURDOMAIN/ingenico/example3request
 
 
 ## Change log
