@@ -80,4 +80,48 @@ class Ingenico {
         return $response;
     }
 
+    /**
+     * It retrieves the merchant
+     *
+     * @return Merchant
+     */
+    public function getMerchant()
+    {
+        $ingenicoRequest    = new IngenicoHostedCheckoutRequest();
+        $merchant = $ingenicoRequest->getMerchant();
+
+        return $merchant;
+    }
+
+    /**
+     * It retrieves the payment status pass by parameter in the server using the Ingenico SDK payment API
+     *
+     * @param  String   $checkoutId
+     *
+     * @return Response
+     */
+    public function getPaymentStatus($checkoutId)
+    {
+        $ingenicoRequest    = new IngenicoHostedCheckoutRequest();
+        $response = $ingenicoRequest->getStatus($checkoutId);
+
+        return $response;
+    }
+
+
+    /**
+    * It sends an approve request to Ingenico for the paymentId passed by parameter
+    *
+    * @param string $paymentId
+    *
+    * @return Response Approve response
+    */
+    public function approvePayment($paymentId)
+    {
+        $ingenicoRequest    = new IngenicoRequest();
+        $response = $ingenicoRequest->approvePayment($paymentId);
+        
+        return $response;
+    }
+
 }

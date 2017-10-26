@@ -91,4 +91,43 @@ class CustomCommunicator extends Communicator
         $customResponse = new IngenicoResponse($response, $httpStatusCode, $requestBody);
         return $customResponse;
     }
+
+    /**
+     * {@inheritDoc}
+     * @param ResponseClassMap $responseClassMap
+     * @param string $relativeUriPath
+     * @param string $clientMetaInfo
+     * @param RequestObject|null $requestParameters
+     * @param CallContext $callContext
+     * @return DataObject
+     * @throws Exception
+     */
+    public function get(
+        ResponseClassMap $responseClassMap,
+        $relativeUriPath,
+        $clientMetaInfo = '',
+        RequestObject $requestParameters = null,
+        CallContext $callContext = null
+    ) {
+        $relativeUriPathWithRequestParameters =
+            $this->getRelativeUriPathWithRequestParameters($relativeUriPath, $requestParameters);
+        $requestHeaders =
+            $this->getRequestHeaders('GET', $relativeUriPathWithRequestParameters, $clientMetaInfo, $callContext);
+
+        $connectionResponse = $this->getConnection()->get(
+            $this->communicatorConfiguration->getApiEndpoint() . $relativeUriPathWithRequestParameters,
+            $requestHeaders,
+            $this->communicatorConfiguration->getProxyConfiguration()
+        );
+        $response =
+            $this->getResponseFactory()->createResponse($connectionResponse, $responseClassMap, $callContext);
+        $httpStatusCode = $connectionResponse->getHttpStatusCode();
+        /*
+        * This block is different from the inherited method
+        * Return a custom response that contains the response and the status
+        *
+        */
+        $customResponse = new IngenicoResponse($response, $httpStatusCode, null);
+        return $customResponse;
+    }
 }

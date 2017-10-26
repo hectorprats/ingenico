@@ -93,5 +93,26 @@ class IngenicoRequest {
         return $testconnection;
     }
 
-
+    /**
+    * It sends an approve request to Ingenico for the paymentId passed by parameter
+    *
+    * @param string $paymentId
+    *
+    * @return Response Approve response
+    */
+    public function approvePayment($paymentId)
+    {
+        /*
+        $references = new OrderReferencesApprovePayment();
+        $order = new OrderApprovePayment();
+        $order->references = $references;
+        */
+        $body = new ApprovePaymentRequest();
+        //$body->order = $order;
+        
+        $merchant   = $this->getMerchant();
+        $response = $merchant->payments()->approve($paymentId, $body);
+        
+        return $response;
+    }
 }
