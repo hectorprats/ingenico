@@ -100,7 +100,7 @@ class IngenicoHostedCheckoutRequest extends IngenicoRequest {
     *
     * @return Response
     */
-    public function getStatus($checkoutId)
+    public function getCheckoutStatus($checkoutId)
     {
         $merchant   = $this->getMerchant();
         $response   = $merchant->hostedcheckouts()->get($checkoutId);

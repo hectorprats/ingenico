@@ -11,6 +11,7 @@ use Ingenico\Connect\Sdk\Domain\Hostedcheckout\Definitions\HostedCheckoutSpecifi
 use Ingenico\Connect\Sdk\Domain\Hostedcheckout\CreateHostedCheckoutRequest;
 use Ingenico\Connect\Sdk\Domain\Hostedcheckout\Definitions\PaymentProductFiltersHostedCheckout;
 use Ingenico\Connect\Sdk\Domain\Definitions\PaymentProductFilter;
+use Ingenico\Connect\Sdk\Domain\Payment\ApprovePaymentRequest;
 
 class IngenicoRequest {
     protected $apiKey;

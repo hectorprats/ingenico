@@ -40,6 +40,11 @@ class IngenicoResponse {
     }
     public function getResponse()
     {
+        $status = $this->status;
+        if ($this->status >= 400)
+        {
+            throw new Exception('IngenicoResponse Error status = '.$this->status);
+        }
         return $this->response;
     }
 
