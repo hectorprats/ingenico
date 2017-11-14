@@ -43,7 +43,8 @@ class IngenicoResponse {
         $status = $this->status;
         if ($this->status >= 400)
         {
-            throw new Exception('IngenicoResponse Error status = '.$this->status);
+            $errmsg = $this->response->errors[0]->message;
+            throw new Exception('IngenicoResponse Error status = '.$errmsg);
         }
         return $this->response;
     }

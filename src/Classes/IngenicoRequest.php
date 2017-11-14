@@ -26,15 +26,14 @@ class IngenicoRequest {
     *
     * @return void
     */
-    public function __construct()
+    public function __construct($country='default')
     {
 
-        $this->apiKey           = Config::get('ingenico.api_key');
-        $this->secret           = Config::get('ingenico.secret_key');
-        $this->endPoint         = Config::get('ingenico.end_point');
-        $this->merchantId       = Config::get('ingenico.merchant');
-        $this->baseRedirectUrl  = Config::get('ingenico.base_redirect_url');
-
+        $this->apiKey           = Config::get('ingenico.'.$country.'.api_key');
+        $this->secret           = Config::get('ingenico.'.$country.'.secret_key');
+        $this->endPoint         = Config::get('ingenico.'.$country.'.end_point');
+        $this->merchantId       = Config::get('ingenico.'.$country.'.merchant');
+        $this->baseRedirectUrl  = Config::get('ingenico.'.$country.'.base_redirect_url');
         //set the client which needs to set the connection first
         $communicatorConfiguration = new CommunicatorConfiguration($this->apiKey,$this->secret,$this->endPoint,'Ingenico');
         //$communicator = new Communicator(new DefaultConnection(),$communicatorConfiguration);
@@ -53,6 +52,15 @@ class IngenicoRequest {
         $merchantId = $this->merchantId;
         $merchant   = $client->merchant($merchantId);
         return $merchant;
+    }
+
+    /**
+    * Set the merchant Id to the one pass by parameter
+    * @return int $merchantId
+    */
+    public function setMerchant($merchantId)
+    {
+        $this->merchantId = $merchantId;
     }
 
     /**
@@ -114,6 +122,21 @@ class IngenicoRequest {
         $merchant   = $this->getMerchant();
         $response = $merchant->payments()->approve($paymentId, $body);
         
+        return $response;
+    }
+
+    /**
+    * Get the transaction status for the payment ID passed by parameter
+    *
+    * @param String $paymentId
+    *
+    * @return Response
+    */
+    public function getPaymentStatus($paymentId)
+    {
+        $merchant   = $this->getMerchant();
+        $response = $merchant->payments()->get($paymentId);
+
         return $response;
     }
 }

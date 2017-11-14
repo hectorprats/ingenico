@@ -67,8 +67,6 @@ class IngenicoController extends Controller
         $user_id        = Input::get('user_id');
         $lang           = Input::get('lang');
 
-        $merchantId = Config::get('ingenico.merchant');
-
         try {
             $response = \Ingenico::getPaymentStatus($checkoutId);
         } catch(\Exception $e) {
@@ -152,7 +150,7 @@ class IngenicoController extends Controller
         $requestBody = $result->getRequestBody();
         //else
         
-        $baseRedirectUrl    = Config::get('ingenico.base_redirect_url');
+        $baseRedirectUrl    = Config::get('ingenico.default.base_redirect_url');
         $redirectUrl = $baseRedirectUrl . $response->partialRedirectUrl;
 
         $responseSucceed = 'Sample 1: click on the following link to go to the payment gateway<br />';
@@ -202,7 +200,7 @@ class IngenicoController extends Controller
         //echo "The Checkout Hosted Request returned:<br />";
         //var_dump($response);
 
-        $baseRedirectUrl    = Config::get('ingenico.base_redirect_url');
+        $baseRedirectUrl    = Config::get('ingenico.default.base_redirect_url');
 
         $redirectUrl = $baseRedirectUrl . $response->partialRedirectUrl;
         echo "Sample: click on the following link to go to the payment gateway<br />";
