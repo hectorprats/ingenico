@@ -29,14 +29,35 @@ class IngenicoController extends Controller
         $newUrl .= $path==null ? $this->returnUrlPath : $this->basePath . $path;
         return $newUrl;
     }
-    /*
-    * It tests the connection to Ingenido SDK with the config values from file
+    /**
+    * Returns settings array that can be use to initialize any Ingenico request
+    * @param  string    $country country code. we will get its config
+    * @return string[]  Array of settings
+    */
+    private function getParamsFor($country="default", $returnUrl=null)
+    {
+        $url = is_null($returnUrl) ? Config::get('ingenico.'.$country.'.return_url') : $returnUrl;
+        $params = [
+            'apikey'            => Config::get('ingenico.'.$country.'.api_key'),
+            'secret'            => Config::get('ingenico.'.$country.'.secret_key'),
+            'endpoint'          => Config::get('ingenico.'.$country.'.end_point'),
+            'merchant'          => Config::get('ingenico.'.$country.'.merchant'),
+            'base_redirect_url' => Config::get('ingenico.'.$country.'.base_redirect_url'),
+            'return_url'        => $url,
+        ];
+        return $params;
+    }
+
+    /**
+    * It tests the connection to Ingenido SDK for the desired country if specied
     * @return void
     */
     public function testConnection()
     {
+        $country = Input::has('_country') ? Input::get('_country'):"default";
+        $params = $this->getParamsFor($country);
         try {
-            $testconnection = \Ingenico::testConnection();
+            $testconnection = \Ingenico::testConnection($params);
             echo "Connection to Ingenico SDK was successful.<br />";
             dd($testconnection);
         } catch (\Exception $e) {
@@ -45,7 +66,7 @@ class IngenicoController extends Controller
         }
     }
 
-    /*
+    /**
     * This is the return from de redirect payment, process the result and make a new request
     * to know transaction status and indicates whether it was successful or not
     * 
@@ -58,6 +79,8 @@ class IngenicoController extends Controller
     *
     *  Then we make a new request to know the status using the hostedCheckoutId variable.
     *
+    * @param  string    $country country code. we will get its config
+    *
     */
     public function sampleReturnCheckout()
     {
@@ -67,15 +90,28 @@ class IngenicoController extends Controller
         $user_id        = Input::get('user_id');
         $lang           = Input::get('lang');
 
+        $country = Input::has('_country') ? Input::get('_country'):"default";
+        $params = $this->getParamsFor($country);
+
         try {
-            $response = \Ingenico::getPaymentStatus($checkoutId);
+            $result = \Ingenico::getCheckoutStatus($params, $checkoutId);
+            $response   = $result->getResponse();
+            if (property_exists($response, 'errors'))
+            {
+                $eCategory  = $response->errors[0]->category;
+                $msg        = $response->errors[0]->message;
+                throw new \Exception($eCategory. ': '. $msg);
+            }
         } catch(\Exception $e) {
             //the checkout most likely doesn't exist
+            dd($e);
             $msg        = $e->getTrace()[0]['args'][1]->errors[0]->message;
             $eCategory  = $e->getTrace()[0]['args'][1]->errors[0]->category;
             $reqUrl     = $e->getTrace()[1]['args'][1];
             //dd($e->getTrace());
             echo $eCategory. ". ".$msg. " at ".$reqUrl;
+            echo $e->getMessage();
+            return;
         }
         //returnMac = fa34e6ba-d220-4fbe-bab0-f75a0e6db6b3
         if (!isset($response))
@@ -115,13 +151,29 @@ class IngenicoController extends Controller
             }
 
         }
+        $paymentId = null;
+        if (property_exists($response, 'createdPaymentOutput'))
+        {
+            //Within the 2 hours session
+            $createdPaymentOutput   = $response->createdPaymentOutput;
+            $payment                = $createdPaymentOutput->payment;
+            $paymentId              = $payment->id;
+        }
+        if ($paymentId)
+        {
+            echo '<a href="/ingenico/sampleapprovepayment?paymentId='.$paymentId.'">Click for approving the payment '.$paymentId.'</a><br />';
+            echo '<a href="/ingenico/samplecapture?paymentId='.$paymentId.'">Click for capture the payment '.$paymentId.'</a><br />';
+        } else {
+            echo 'The transaction has not payment info yet';
+        }
         echo "The Transaction status full response is:<br />";
         dd($response);
     }
 
-    /*
+    /**
     * Executes the IngenicoExample1 and shows a button to the response url 
     * to  be redirected to the website
+    * @param  string    $country country code. we will get its config
     */
     public function example1()
     {
@@ -129,7 +181,11 @@ class IngenicoController extends Controller
         $example            = new IngenicoExample1();
         $attributesWrapper  = $example->mappedAttributes(); //instead of setData
 
-        $result     = \Ingenico::payment($attributesWrapper, $returnUrl);
+        $country = Input::has('_country') ? Input::get('_country'):"default";
+        $params = $this->getParamsFor($country, $returnUrl);
+        //$result = \Ingenico::payment($params, $attributesWrapper, $returnUrl);
+        $result = \Ingenico::payment($params, $attributesWrapper);
+        dd($result);
 
         $response   = $result->getResponse();
         $status     = $result->getStatus();
@@ -182,29 +238,40 @@ class IngenicoController extends Controller
         }
     }
 
-    public function exampleFormResponse()
+    /**
+    * @param  string    $country country code. we will get its config
+    */
+    public function exampleFormResponse($country="default")
     {
         //remove notProperties elements from inputs array
-        $notProperties = ['_token'=>''];
+        $notProperties = ['_token'=>'', '_countryConfig'];
         $inputs = array_diff_key(\Input::all(), $notProperties);
         
         $example            = new IngenicoExample2(); //It could be Example3, it does the same
         $attributesWrapper  = $example->mappedAttributes($inputs);
 
         $returnUrl  = $this->url();
+        $country = Input::has('_country') ? Input::get('_country'):"default";
+        $params = $this->getParamsFor($country, $returnUrl);
 
-        $result   = \Ingenico::payment($attributesWrapper, $returnUrl);
+        //$result = \Ingenico::payment($attributesWrapper, $returnUrl); //@todo: remove
+        $result = \Ingenico::payment($params, $attributesWrapper);
+
 
         $response   = $result->getResponse();
         
-        //echo "The Checkout Hosted Request returned:<br />";
-        //var_dump($response);
-
-        $baseRedirectUrl    = Config::get('ingenico.default.base_redirect_url');
-
-        $redirectUrl = $baseRedirectUrl . $response->partialRedirectUrl;
-        echo "Sample: click on the following link to go to the payment gateway<br />";
-        echo '<a href="'.$redirectUrl.'">'.$redirectUrl.'</a>';
+        if (property_exists($response, 'partialRedirectUrl'))
+        {
+            $baseRedirectUrl    = Config::get('ingenico.default.base_redirect_url');
+            $redirectUrl = $baseRedirectUrl . $response->partialRedirectUrl;
+            echo "Sample: click on the following link to go to the payment gateway<br />";
+            echo '<a href="'.$redirectUrl.'">'.$redirectUrl.'</a>';
+        }
+        else
+        {
+            echo "<span>There was an Error while creating the Transaction";
+            dd($response);
+        }
         return;
     }
 
@@ -249,5 +316,22 @@ class IngenicoController extends Controller
         {
             return response($response, $status);
         }
+    }
+
+    public function approvePayment()
+    {
+        $paymentId = \Input::get('paymentId'); //920674871
+        
+        $response   = null;
+        $country    = Input::has('_country') ? Input::get('_country'):"default";
+        $params     = $this->getParamsFor($country);
+        try{
+            $result = \Ingenico::approvePayment($params, $paymentId);
+            $response   = $result->getResponse();
+            echo "SUCCESSFUL<br />";
+        } catch (Exception $e){
+            dd($e);
+        }
+        dd($response);
     }
 }

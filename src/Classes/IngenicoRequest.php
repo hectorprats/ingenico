@@ -23,17 +23,28 @@ class IngenicoRequest {
 
     /**
     * It sets up the Client with the params defined in the config file
+    *  $params has the following structure:
+    *       [
+    *            'apikey'           => , //string Ingenico API Key 
+    *            'secret'           => , //string Ingenico Secret Key
+    *            'endpoint'         => , //string Ingenico EndPoint Api Url
+    *            'merchant'         => , //string Ingenico merchant Id
+    *            'base_redirect_url'  => , //Base url for the checkout requests
+    *            'returnUrl'        => , //Return url after the payment has been made
+    *       ]
     *
+    * @param string[] $params array of settings with the structure described above
     * @return void
     */
-    public function __construct($country='default')
+    public function __construct($params)
     {
 
-        $this->apiKey           = Config::get('ingenico.'.$country.'.api_key');
-        $this->secret           = Config::get('ingenico.'.$country.'.secret_key');
-        $this->endPoint         = Config::get('ingenico.'.$country.'.end_point');
-        $this->merchantId       = Config::get('ingenico.'.$country.'.merchant');
-        $this->baseRedirectUrl  = Config::get('ingenico.'.$country.'.base_redirect_url');
+        $this->apiKey           = $params['apikey'];
+        $this->secret           = $params['secret'];
+        $this->endPoint         = $params['endpoint'];
+        $this->merchantId       = $params['merchant'];
+        $this->baseRedirectUrl  = $params['base_redirect_url'];
+        $this->returnUrl        = $params['return_url'];
         //set the client which needs to set the connection first
         $communicatorConfiguration = new CommunicatorConfiguration($this->apiKey,$this->secret,$this->endPoint,'Ingenico');
         //$communicator = new Communicator(new DefaultConnection(),$communicatorConfiguration);
@@ -116,7 +127,7 @@ class IngenicoRequest {
         $order = new OrderApprovePayment();
         $order->references = $references;
         */
-        $body = new ApprovePaymentRequest();
+        $body = new ApprovePaymentRequest($param);
         //$body->order = $order;
         
         $merchant   = $this->getMerchant();

@@ -12,11 +12,12 @@ class Ingenico {
     /**
      * It tests the connection to the Ingenico SDK with the values setted in the config file
      *
-     * @return  String
+     * @param   string[] $params array of settings with the structure
+     * @return  string
      */
-    public function testConnection()
+    public function testConnection($params)
     {
-        $ingenicoRequest = new IngenicoRequest();
+        $ingenicoRequest = new IngenicoRequest($params);
         return $ingenicoRequest->testConnection();
     }
 
@@ -34,10 +35,13 @@ class Ingenico {
     /**
      * Sets the payment request and sends it
      *
+     * @param  string[] $params 
      * @param  IngenicoAttributesWrapper    $attributesWrapper
-     * @param  String                       $returnUrl
+     //* @param  String                       $returnUrl
+     * @param  string[] $params array of settings with the structure
      */
-    public function payment(IngenicoAttributesWrapper $attributesWrapper, $returnUrl=null)
+    //public function payment(IngenicoAttributesWrapper $attributesWrapper, $returnUrl=null)
+    public function payment($params, IngenicoAttributesWrapper $attributesWrapper)
     {
         /* ---------------------------------------------
         * Set all the data to do the request
@@ -47,12 +51,13 @@ class Ingenico {
 
         $order          = $attributesWrapper->buildOrder();
         $fraud          = $attributesWrapper->buildFraud();
+        $returnUrl      = $params['return_url'];
         $hostedCheckout = $attributesWrapper->buildHostedCheckout($returnUrl);
 
         /* ---------------------------------------------
         * Prepare the Request
         * -------------------------------------------- */
-        $request = new IngenicoHostedCheckoutRequest();
+        $request = new IngenicoHostedCheckoutRequest($params);
         $request->setOrder($order);
         $request->setFraudFields($fraud);
         $request->setHostedCheckoutSpecificInput($hostedCheckout);
@@ -81,13 +86,14 @@ class Ingenico {
     /**
      * It retrieves the payment status pass by parameter in the server using the Ingenico SDK payment API
      *
+     * @param  string[] $params array of settings with the structure
      * @param  String   $checkoutId
      *
      * @return Response
      */
-    public function getCheckoutStatus($checkoutId)
+    public function getCheckoutStatus($params, $checkoutId)
     {
-        $ingenicoRequest    = new IngenicoHostedCheckoutRequest();
+        $ingenicoRequest    = new IngenicoHostedCheckoutRequest($params);
         $response = $ingenicoRequest->getCheckoutStatus($checkoutId);
 
         return $response;
@@ -96,13 +102,14 @@ class Ingenico {
     /**
      * It retrieves the payment status pass by parameter in the server using the Ingenico SDK payment API
      *
+     * @param  string[] $params array of settings with the structure
      * @param  String   $paymentId
      *
      * @return Response
      */
-    public function getPaymentStatus($paymentId)
+    public function getPaymentStatus($params, $paymentId)
     {
-        $ingenicoRequest    = new IngenicoRequest();
+        $ingenicoRequest    = new IngenicoRequest($params);
         $response = $ingenicoRequest->getPaymentStatus($paymentId);
         return $response;
     }
@@ -110,13 +117,14 @@ class Ingenico {
     /**
     * It sends an approve request to Ingenico for the paymentId passed by parameter
     *
+    * @param string[] $params array of settings with the structure
     * @param string $paymentId
     *
     * @return Response Approve response
     */
-    public function approvePayment($paymentId)
+    public function approvePayment($params, $paymentId)
     {
-        $ingenicoRequest    = new IngenicoRequest();
+        $ingenicoRequest    = new IngenicoRequest($params);
         $response = $ingenicoRequest->approvePayment($paymentId);
         
         return $response;

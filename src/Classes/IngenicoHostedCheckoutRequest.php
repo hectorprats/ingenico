@@ -19,9 +19,12 @@ class IngenicoHostedCheckoutRequest extends IngenicoRequest {
     
     protected $request;
 
-    public function __construct()
+    /**
+    * {@inheritDoc}
+    */
+    public function __construct($params)
     {
-        parent::__construct();
+        parent::__construct($params);
     }
     
 
@@ -71,10 +74,6 @@ class IngenicoHostedCheckoutRequest extends IngenicoRequest {
 
     /**
     * Send the HostedCheckout request to Ingenico payment
-    *
-    * @param HostedCheckoutSpecificInput $hostedCheckoutSpecificInput
-    * @param Order $order
-    * @param FraudFields $fraudFields
     *
     * @return Response
     */
