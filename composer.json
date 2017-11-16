@@ -1,7 +1,12 @@
 {
     "name": "bardela/ingenico",
-    "description": "Laravel 5 Wrapper for Ingenico Payments",
     "type": "library",
+    "description": "Laravel 5 Wrapper for Ingenico Payments",
+    "keywords": [
+        "bardela",
+        "Ingenico"
+    ],
+    "homepage": "https://github.com/bardela/ingenico",
     "license": "MIT",
     "authors": [
         {
@@ -16,6 +21,11 @@
     "autoload": {
         "psr-4": {
             "Bardela\\Ingenico\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
         }
     }
 }

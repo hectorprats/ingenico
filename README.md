@@ -56,3 +56,16 @@ Then, visit these new urls in your browser.
 ## Change log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+
+[ico-version]: https://img.shields.io/badge/version-1.0.x--dev-orange.svg?style=flat-square
+[ico-license]: https://img.shields.io/badge/license-MIT-yellow.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/badge/downloads-20-lightgrey.svg?style=flat-square
+
+[link-packagist]: https://packagist.org/packages/bardela/ingenico
+[link-downloads]: https://packagist.org/packages/bardela/ingenico
+[link-author]: https://github.com/bardela
+[link-contributors]: ../../contributors
