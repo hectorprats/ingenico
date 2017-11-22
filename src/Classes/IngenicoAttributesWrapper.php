@@ -324,9 +324,9 @@ class IngenicoAttributesWrapper
             $billingAddress->countryCode    = $this->bi_countryCode;
 
         //Company Information
+        $companyInformation = new CompanyInformation();
         if (isset($this->ci_name) )
         {
-            $companyInformation = new CompanyInformation();
             $companyInformation->name = $this->ci_name;
         }
 
