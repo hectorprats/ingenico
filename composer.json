@@ -4,7 +4,7 @@
     "description": "Laravel 5 Wrapper for Ingenico Payments",
     "keywords": [
         "asanzred",
-        "Ingenico"
+        "ingenico"
     ],
     "homepage": "https://github.com/asanzred/ingenico",
     "license": "MIT",
@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Bardela\\Ingenico\\": "src/"
+            "Asanzred\\Ingenico\\": "src/"
         }
     },
     "extra": {
