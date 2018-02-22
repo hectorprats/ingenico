@@ -1,7 +1,7 @@
 <?php
-namespace Bardela\Ingenico;
+namespace Asanzred\Ingenico;
 
-use Bardela\Ingenico\IngenicoAttributtesWrapper;
+use Asanzred\Ingenico\IngenicoAttributtesWrapper;
 
 /**
 * The main goal of this class is show and manipulate the collections of IngenicoAttributtesWrapper properties

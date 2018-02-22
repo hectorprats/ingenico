@@ -1,12 +1,12 @@
 {
-    "name": "bardela/ingenico",
+    "name": "asanzred/ingenico",
     "type": "library",
     "description": "Laravel 5 Wrapper for Ingenico Payments",
     "keywords": [
         "bardela",
         "Ingenico"
     ],
-    "homepage": "https://github.com/bardela/ingenico",
+    "homepage": "https://github.com/asanzred/ingenico",
     "license": "MIT",
     "authors": [
         {

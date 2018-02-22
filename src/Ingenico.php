@@ -1,4 +1,4 @@
-<?php namespace Bardela\Ingenico;
+<?php namespace Asanzred\Ingenico;
 
 use Closure;
 

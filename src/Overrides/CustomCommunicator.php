@@ -1,5 +1,5 @@
 <?php
-namespace Bardela\Ingenico;
+namespace Asanzred\Ingenico;
 
 use Exception;
 use Ingenico\Connect\Sdk\Communicator;

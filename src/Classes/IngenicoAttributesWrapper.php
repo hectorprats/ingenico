@@ -1,5 +1,5 @@
 <?php
-namespace Bardela\Ingenico;
+namespace Asanzred\Ingenico;
 
 use Ingenico\Connect\Sdk\Domain\Definitions\AirlineData;
 use Ingenico\Connect\Sdk\Domain\Payment\Definitions\OrderTypeInformation;

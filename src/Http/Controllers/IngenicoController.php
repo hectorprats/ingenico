@@ -1,6 +1,6 @@
 <?php 
 //namespace ApiSW\Http\Controllers;
-namespace Bardela\Ingenico\Http\Controllers;
+namespace Asanzred\Ingenico\Http\Controllers;
  
 use ApiSW\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -12,9 +12,9 @@ use Ingenico\Connect\Sdk\CommunicatorConfiguration;
 use Ingenico\Connect\Sdk\Communicator;
 use Ingenico\Connect\Sdk\DefaultConnection;
 use Ingenico\Connect\Sdk\Client;
-use \Bardela\Ingenico\IngenicoExample1;
-use \Bardela\Ingenico\IngenicoExample2;
-use \Bardela\Ingenico\IngenicoExample3;
+use \Asanzred\Ingenico\IngenicoExample1;
+use \Asanzred\Ingenico\IngenicoExample2;
+use \Asanzred\Ingenico\IngenicoExample3;
 
 
 class IngenicoController extends Controller
@@ -231,7 +231,7 @@ class IngenicoController extends Controller
         }
         else
         {
-            return \View::make('bardela/ingenico::sampleform', array(
+            return \View::make('asanzred/ingenico::sampleform', array(
                 'url'       => $this->url('/exampleformresponse'),
                 'fields'    => $fields
             ));
@@ -292,7 +292,7 @@ class IngenicoController extends Controller
         }
         else
         {
-            return \View::make('bardela/ingenico::sampleform', array(
+            return \View::make('asanzred/ingenico::sampleform', array(
                 'url'       => $this->url('/exampleformresponse'),
                 'fields'    => $fields
             ));
