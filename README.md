@@ -67,5 +67,5 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 
 [link-packagist]: https://packagist.org/packages/asanzred/ingenico
 [link-downloads]: https://packagist.org/packages/asanzred/ingenico
-[link-author]: https://github.com/bardela
+[link-author]: https://github.com/asanzred
 [link-contributors]: ../../contributors
