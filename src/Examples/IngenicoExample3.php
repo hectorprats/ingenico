@@ -1,5 +1,5 @@
 <?php
-namespace Bardela\Ingenico;
+namespace Asanzred\Ingenico;
 
 /**
 * This example can be executed in 2 steps

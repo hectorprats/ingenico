@@ -1,8 +1,8 @@
 <?php
-namespace Bardela\Ingenico;
+namespace Asanzred\Ingenico;
 
 use Config;
-use Bardela\Ingenico\IngenicoAttributtesWrapper;
+use Asanzred\Ingenico\IngenicoAttributtesWrapper;
 
 /**
 * Sample data 1 for test:

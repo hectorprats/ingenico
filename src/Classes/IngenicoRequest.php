@@ -1,5 +1,5 @@
 <?php
-namespace Bardela\Ingenico;
+namespace Asanzred\Ingenico;
 
 use Config;
 use Ingenico\Connect\Sdk\CommunicatorConfiguration;

@@ -1,5 +1,5 @@
 <?php
-namespace Bardela\Ingenico;
+namespace Asanzred\Ingenico;
 
 use Illuminate\Support\Facades\Facade as IlluminateFacade;
 

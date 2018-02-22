@@ -1,5 +1,5 @@
 <?php
-namespace Bardela\Ingenico;
+namespace Asanzred\Ingenico;
 
 use Ingenico\Connect\Sdk\Domain\Errors\ErrorResponse;
 use Ingenico\Connect\Sdk\Domain\Hostedcheckout\CreateHostedCheckoutResponse;

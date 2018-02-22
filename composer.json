@@ -1,12 +1,12 @@
 {
-    "name": "bardela/ingenico",
+    "name": "asanzred/ingenico",
     "type": "library",
     "description": "Laravel 5 Wrapper for Ingenico Payments",
     "keywords": [
         "bardela",
         "Ingenico"
     ],
-    "homepage": "https://github.com/bardela/ingenico",
+    "homepage": "https://github.com/asanzred/ingenico",
     "license": "MIT",
     "authors": [
         {
@@ -16,7 +16,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "ingenico-epayments/connect-sdk-php": "5.8.0"
+        "ingenico-epayments/connect-sdk-php": "5.16.0"
     },
     "autoload": {
         "psr-4": {
