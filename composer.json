@@ -3,7 +3,7 @@
     "type": "library",
     "description": "Laravel 5 Wrapper for Ingenico Payments",
     "keywords": [
-        "bardela",
+        "asanzred",
         "Ingenico"
     ],
     "homepage": "https://github.com/asanzred/ingenico",
