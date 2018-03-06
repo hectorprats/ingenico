@@ -127,7 +127,7 @@ class IngenicoRequest {
         $order = new OrderApprovePayment();
         $order->references = $references;
         */
-        $body = new ApprovePaymentRequest($param);
+        $body = new ApprovePaymentRequest();
         //$body->order = $order;
         
         $merchant   = $this->getMerchant();
