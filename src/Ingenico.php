@@ -75,9 +75,9 @@ class Ingenico {
      *
      * @return Merchant
      */
-    public function getMerchant()
+    public function getMerchant( $params = null)
     {
-        $ingenicoRequest    = new IngenicoHostedCheckoutRequest();
+        $ingenicoRequest    = new IngenicoHostedCheckoutRequest($params);
         $merchant = $ingenicoRequest->getMerchant();
 
         return $merchant;
