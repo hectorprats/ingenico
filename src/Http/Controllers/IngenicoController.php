@@ -2,7 +2,7 @@
 //namespace ApiSW\Http\Controllers;
 namespace Asanzred\Ingenico\Http\Controllers;
  
-use ApiSW\Http\Controllers\Controller;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Config;
