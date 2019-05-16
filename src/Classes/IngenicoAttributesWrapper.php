@@ -129,6 +129,7 @@ class IngenicoAttributesWrapper
 
         //typeInformation
             public $purchaseType; // string values: good, service
+            public $transactionType; // string values: purchase,check-acceptance,account-funding,quasi-cash,prepaid-activation-or-load
             public $usageType;    // string values: private, commercial
 
         /* -- amountOfMoney --*/
@@ -457,6 +458,7 @@ class IngenicoAttributesWrapper
         //typeInformation
             $typeInformation = new OrderTypeInformation();
                 $typeInformation->purchaseType  = $this->purchaseType;
+                $typeInformation->transactionType  = $this->transactionType;
                 $typeInformation->usageType     = $this->usageType;
 
         $additionalInput = new AdditionalOrderInput();
@@ -573,16 +575,16 @@ class IngenicoAttributesWrapper
             $fraud->cardOwnerAddress    = $cardOwnerAddress;
 
             $fraud->customerIpAddress   = $this->customerIpAddress;
-            $fraud->defaultFormFill     = $this->defaultFormFill;
-            $fraud->fingerPrintActivated= $this->fingerPrintActivated;
+            //$fraud->defaultFormFill     = $this->defaultFormFill;
+            //$fraud->fingerPrintActivated= $this->fingerPrintActivated;
             $fraud->giftCardType        = $this->giftCardType;
             $fraud->giftMessage         = $this->giftMessage;
-            $fraud->hasForgottenPwd     = $this->hasForgottenPwd;
-            $fraud->hasPassword         = $this->hasPassword;
-            $fraud->isPreviousCustomer  = $this->isPreviousCustomer;
+            //$fraud->hasForgottenPwd     = $this->hasForgottenPwd;
+            //$fraud->hasPassword         = $this->hasPassword;
+            //$fraud->isPreviousCustomer  = $this->isPreviousCustomer;
             $fraud->orderTimezone       = $this->orderTimezone;
-            $fraud->shipComments        = $this->shipComments;
-            $fraud->shipmentTrackingNumber  = $this->shipmentTrackingNumber;
+            //$fraud->shipComments        = $this->shipComments;
+            //$fraud->shipmentTrackingNumber  = $this->shipmentTrackingNumber;
 
             //shippingDetails
                 $shippingDetails = new FraudFieldsShippingDetails();
