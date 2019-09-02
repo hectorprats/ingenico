@@ -52,6 +52,11 @@ class IngenicoAttributesWrapper
     *       variant
     * =================================== */
     public $isRecurring;    //boolean. Show only payment products that support recurring(true) / one-off (false). Default false
+
+    public $initialSchemeTransactionId; // boolean. For those transactions that have a previous transaction
+    public $unscheduledCardOnFileIndicator; // 'first'/'subsequent' depending if there is previous transaction
+    public $unscheduledCardOnFileRequestor; // 'cardholderInitiated'/'merchantInitiated' depending if there is previous transaction
+
     public $locale;         // string(5). Examples: en_US or en_GB
         /*--paymentProductFilters--*/
         public $excludeGroups;      //array: List containing all payment product groups that should either be excluded from the payment context
@@ -612,6 +617,12 @@ class IngenicoAttributesWrapper
         $hostedCheckoutSpecificInput->showResultPage = $this->showResultPage;
         $hostedCheckoutSpecificInput->tokens         = $this->tokens;
         $hostedCheckoutSpecificInput->variant   = $this->variant;
+
+        if ($this->initialSchemeTransactionId) {
+            $hostedCheckoutSpecificInput->initialSchemeTransactionId = $this->initialSchemeTransactionId;
+        }
+        $hostedCheckoutSpecificInput->unscheduledCardOnFileIndicator   = $this->unscheduledCardOnFileIndicator;
+        $hostedCheckoutSpecificInput->unscheduledCardOnFileRequestor   = $this->unscheduledCardOnFileRequestor;
 
         // filters
             $filter = new PaymentProductFiltersHostedCheckout();
