@@ -613,6 +613,8 @@ class IngenicoAttributesWrapper
         $hostedCheckoutSpecificInput = new HostedCheckoutSpecificInput();
         $hostedCheckoutSpecificInput->locale    = $this->locale;
         $hostedCheckoutSpecificInput->returnUrl = $url==null || $url==''? $this->returnUrl : $url;
+
+        $hostedCheckoutSpecificInput->returnCancelState = true;
         
         $hostedCheckoutSpecificInput->showResultPage = $this->showResultPage;
         $hostedCheckoutSpecificInput->tokens         = $this->tokens;
