@@ -1,4 +1,4 @@
-<?php namespace Asanzred\Ingenico;
+<?php namespace Smallworldfs\Ingenico;
 
 use Closure;
 

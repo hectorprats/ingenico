@@ -1,7 +1,7 @@
 <?php
-namespace Asanzred\Ingenico;
+namespace Smallworldfs\Ingenico;
 
-use Asanzred\Ingenico\IngenicoAttributtesWrapper;
+use Smallworldfs\Ingenico\IngenicoAttributtesWrapper;
 
 /**
 * The main goal of this class is show and manipulate the collections of IngenicoAttributtesWrapper properties

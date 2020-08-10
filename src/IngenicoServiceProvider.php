@@ -1,6 +1,6 @@
 <?php
 
-namespace Asanzred\Ingenico;
+namespace Smallworldfs\Ingenico;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Routing\Router;
@@ -17,7 +17,7 @@ class IngenicoServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/ingenico.php' => config_path('ingenico.php'),
         ]);
-        $this->loadViewsFrom(__DIR__. '/views/', 'asanzred/ingenico');
+        $this->loadViewsFrom(__DIR__. '/views/', 'smallworldfs/ingenico');
     }
 
     /**
@@ -29,7 +29,7 @@ class IngenicoServiceProvider extends ServiceProvider
     {
         $this->registerIngenico();
         //register out controller
-        $this->app->make('Asanzred\Ingenico\Http\Controllers\IngenicoController');
+        $this->app->make('Smallworldfs\Ingenico\Http\Controllers\IngenicoController');
         config([
             'config/ingenico.php', // add your new config file here!
         ]);

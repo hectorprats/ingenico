@@ -1,6 +1,6 @@
 <?php 
 //namespace ApiSW\Http\Controllers;
-namespace Asanzred\Ingenico\Http\Controllers;
+namespace Smallworldfs\Ingenico\Http\Controllers;
  
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -12,9 +12,9 @@ use Ingenico\Connect\Sdk\CommunicatorConfiguration;
 use Ingenico\Connect\Sdk\Communicator;
 use Ingenico\Connect\Sdk\DefaultConnection;
 use Ingenico\Connect\Sdk\Client;
-use \Asanzred\Ingenico\IngenicoExample1;
-use \Asanzred\Ingenico\IngenicoExample2;
-use \Asanzred\Ingenico\IngenicoExample3;
+use \Smallworldfs\Ingenico\IngenicoExample1;
+use \Smallworldfs\Ingenico\IngenicoExample2;
+use \Smallworldfs\Ingenico\IngenicoExample3;
 
 
 class IngenicoController extends Controller
@@ -231,7 +231,7 @@ class IngenicoController extends Controller
         }
         else
         {
-            return \View::make('asanzred/ingenico::sampleform', array(
+            return \View::make('smallworldfs/ingenico::sampleform', array(
                 'url'       => $this->url('/exampleformresponse'),
                 'fields'    => $fields
             ));
@@ -292,7 +292,7 @@ class IngenicoController extends Controller
         }
         else
         {
-            return \View::make('asanzred/ingenico::sampleform', array(
+            return \View::make('smallworldfs/ingenico::sampleform', array(
                 'url'       => $this->url('/exampleformresponse'),
                 'fields'    => $fields
             ));

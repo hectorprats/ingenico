@@ -1,5 +1,5 @@
 <?php
-namespace Asanzred\Ingenico;
+namespace Smallworldfs\Ingenico;
 
 use Illuminate\Support\Facades\Facade as IlluminateFacade;
 

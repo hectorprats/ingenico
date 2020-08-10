@@ -9,7 +9,7 @@
 Via Composer
 
 ``` bash
-$ composer require asanzred/ingenico
+$ composer require smallworldfs/ingenico
 ```
 
 Add ServiceProvider in your `app.php` config file.
@@ -18,7 +18,7 @@ Add ServiceProvider in your `app.php` config file.
 // config/app.php
 'providers' => [
     ...
-    Asanzred\Ingenico\IngenicoServiceProvider::class,
+    Smallworldfs\Ingenico\IngenicoServiceProvider::class,
 ]
 ```
 
@@ -28,7 +28,7 @@ and instead on aliases
 // config/app.php
 'aliases' => [
     ...
-    'Ingenico'         => Asanzred\Ingenico\Facade::class,
+    'Ingenico'         => Smallworldfs\Ingenico\Facade::class,
 ]
 ```
 
@@ -37,7 +37,7 @@ and instead on aliases
 Publish the config by running:
 
 ``` bash
-    php artisan vendor:publish --provider="Asanzred\Ingenico\IngenicoServiceProvider"
+    php artisan vendor:publish --provider="Smallworldfs\Ingenico\IngenicoServiceProvider"
 ```
 Then there must be a new ingenico.php in your main config directory
 Edit this new file and set up the values with your Ingenico access data mostly. For the others, type the ones you want
@@ -65,8 +65,8 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [ico-license]: https://img.shields.io/badge/license-MIT-yellow.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/badge/downloads-20-lightgrey.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/asanzred/ingenico
-[link-downloads]: https://packagist.org/packages/asanzred/ingenico
-[link-author]: https://github.com/asanzred
+[link-packagist]: https://packagist.org/packages/smallworldfs/ingenico
+[link-downloads]: https://packagist.org/packages/smallworldfs/ingenico
+[link-author]: https://github.com/smallworldfs
 [link-contributors]: ../../contributors
 

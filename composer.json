@@ -1,17 +1,17 @@
 {
-    "name": "asanzred/ingenico",
+    "name": "smallworldfs/ingenico",
     "type": "library",
     "description": "Laravel 5 Wrapper for Ingenico Payments",
     "keywords": [
-        "asanzred",
+        "smallworldfs",
         "ingenico"
     ],
-    "homepage": "https://github.com/asanzred/ingenico",
+    "homepage": "https://github.com/smallworldfs/ingenico",
     "license": "MIT",
     "authors": [
         {
             "name": "Alberto Sanz Redondo",
-            "email": "asanzred@gmail.com"
+            "email": "smallworldfs@gmail.com"
         }
     ],
     "minimum-stability": "dev",
@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Asanzred\\Ingenico\\": "src/"
+            "Smallworldfs\\Ingenico\\": "src/"
         }
     },
     "extra": {

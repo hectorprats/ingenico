@@ -1,8 +1,8 @@
 <?php
-namespace Asanzred\Ingenico;
+namespace Smallworldfs\Ingenico;
 
 use Config;
-use Asanzred\Ingenico\IngenicoAttributtesWrapper;
+use Smallworldfs\Ingenico\IngenicoAttributtesWrapper;
 
 /**
 * This example can be executed in 2 steps
