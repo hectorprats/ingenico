@@ -1,5 +1,5 @@
 <?php
-namespace Asanzred\Ingenico;
+namespace Smallworldfs\Ingenico;
 
 use Ingenico\Connect\Sdk\Domain\Definitions\AirlineData;
 use Ingenico\Connect\Sdk\Domain\Payment\Definitions\OrderTypeInformation;
