@@ -1,5 +1,5 @@
 <?php
-namespace Smallworldfs\Ingenico;
+namespace Smallworldfs\Ingenico\Classes;
 
 use Config;
 use Ingenico\Connect\Sdk\CommunicatorConfiguration;

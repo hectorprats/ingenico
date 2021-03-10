@@ -6,7 +6,6 @@
         "smallworldfs",
         "ingenico"
     ],
-    "homepage": "https://github.com/smallworldfs/ingenico",
     "license": "MIT",
     "authors": [
         {
@@ -14,18 +13,12 @@
             "email": "smallworldfs@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "ingenico-epayments/connect-sdk-php": "5.34.1"
     },
     "autoload": {
         "psr-4": {
             "Smallworldfs\\Ingenico\\": "src/"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.4.x-dev"
         }
     }
 }

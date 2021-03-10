@@ -1,8 +1,8 @@
 <?php
-namespace Smallworldfs\Ingenico;
+namespace Smallworldfs\Ingenico\Examples;
 
 use Config;
-use Smallworldfs\Ingenico\IngenicoAttributtesWrapper;
+use Smallworldfs\Ingenico\Classes\IngenicoAttributtesWrapper;
 
 /**
 * Sample data 1 for test:

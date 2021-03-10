@@ -3,7 +3,7 @@
  * This class was auto-generated from the API references found at
  * https://epayments-api.developer-ingenico.com/s2sapi/v1/
  */
-namespace Smallworldfs\Ingenico;
+namespace Smallworldfs\Ingenico\Overrides;
 
 use Ingenico\Connect\Sdk\Client;
 use Ingenico\Connect\Sdk\Communicator;
