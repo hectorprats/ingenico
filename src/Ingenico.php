@@ -1,6 +1,9 @@
 <?php namespace Smallworldfs\Ingenico;
 
 use Closure;
+use Smallworldfs\Ingenico\Classes\IngenicoAttributesWrapper;
+use Smallworldfs\Ingenico\Classes\IngenicoHostedCheckoutRequest;
+use Smallworldfs\Ingenico\Classes\IngenicoRequest;
 
 /**
  *
