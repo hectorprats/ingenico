@@ -12,9 +12,9 @@ use Ingenico\Connect\Sdk\CommunicatorConfiguration;
 use Ingenico\Connect\Sdk\Communicator;
 use Ingenico\Connect\Sdk\DefaultConnection;
 use Ingenico\Connect\Sdk\Client;
-use \Smallworldfs\Ingenico\IngenicoExample1;
-use \Smallworldfs\Ingenico\IngenicoExample2;
-use \Smallworldfs\Ingenico\IngenicoExample3;
+use Smallworldfs\Ingenico\Examples\IngenicoExample1;
+use \Smallworldfs\Ingenico\Examples\IngenicoExample2;
+use \Smallworldfs\Ingenico\Examples\IngenicoExample3;
 
 
 class IngenicoController extends Controller

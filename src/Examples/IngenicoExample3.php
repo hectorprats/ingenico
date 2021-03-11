@@ -1,5 +1,5 @@
 <?php
-namespace Smallworldfs\Ingenico;
+namespace Smallworldfs\Ingenico\Examples;
 
 /**
 * This example can be executed in 2 steps

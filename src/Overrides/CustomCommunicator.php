@@ -1,5 +1,5 @@
 <?php
-namespace Smallworldfs\Ingenico;
+namespace Smallworldfs\Ingenico\Overrides;
 
 use Exception;
 use Ingenico\Connect\Sdk\Communicator;
